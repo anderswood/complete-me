@@ -3,24 +3,23 @@ import Trie from '../scripts/Trie'
 import Node from '../scripts/Node'
 require('locus')
 
-describe('Trie Tests', () => {
+describe('Trie Tests (Phase I)', () => {
 
   it('should be an instance of Trie', () => {
-    let newTrie = new Trie('a');
+    let newTrie = new Trie;
 
     assert.instanceOf(newTrie, Trie);
   })
 
   it('should have a property root which is an instance of a node', () => {
-    let name = 'b';
-    let newTrie = new Trie(name);
-    let newNode = new Node(name);
+    let newTrie = new Trie;
+    let newNode = new Node('');
 
     assert.deepEqual(newTrie.root, newNode);
   })
 
   it('should add a word to the tree', () => {
-    let newTrie = new Trie('t');
+    let newTrie = new Trie;
 
     newTrie.insert('at');
 
@@ -30,7 +29,7 @@ describe('Trie Tests', () => {
   })
 
   it('should add new branches to the tree when adding certain words', () => {
-    let newTrie = new Trie('z');
+    let newTrie = new Trie;
 
     newTrie.insert('at');
     newTrie.insert('ats');
@@ -39,7 +38,7 @@ describe('Trie Tests', () => {
   })
 
   it('should update the "isWord" property to be true', () => {
-    let newTrie = new Trie('a');
+    let newTrie = new Trie;
 
     newTrie.insert('at');
 
@@ -47,7 +46,7 @@ describe('Trie Tests', () => {
   })
 
   it('should update the "address" property to reflect the word', () => {
-    let newTrie = new Trie('a');
+    let newTrie = new Trie;
 
     newTrie.insert('at');
 
@@ -55,7 +54,7 @@ describe('Trie Tests', () => {
   })
 
   it('should locate and return a node based on the string in the address property', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
     let newWord = 'at';
 
     newTrie.insert(newWord);
@@ -65,7 +64,7 @@ describe('Trie Tests', () => {
   })
 
   it('should return undefined if find method called with string that cant be found', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
     let newWord = 'at';
 
     newTrie.insert(newWord);
@@ -75,14 +74,14 @@ describe('Trie Tests', () => {
   })
 
   it('should return the quantity of complete words in the trie (1 word)', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
 
     newTrie.insert('art');
     assert.equal(newTrie.count(), 1);
   })
 
   it('should return the quantity of complete words in the trie (4 words)', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
 
     newTrie.insert('art');
     assert.equal(newTrie.count(), 1);
@@ -95,7 +94,7 @@ describe('Trie Tests', () => {
   })
 
   it('should return the quantity of complete, UNIQUE words', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
 
     newTrie.insert('art');
     assert.equal(newTrie.count(), 1);
@@ -108,7 +107,7 @@ describe('Trie Tests', () => {
   })
 
   it('should return an array of suggested words', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
 
     newTrie.insert('pizza');
     newTrie.insert('pit');
@@ -119,7 +118,7 @@ describe('Trie Tests', () => {
   })
 
   it('should return an array of a bunch of suggested words', () => {
-    let newTrie = new Trie('b');
+    let newTrie = new Trie;
 
     newTrie.insert('photo');
     newTrie.insert('pizza');
@@ -130,6 +129,8 @@ describe('Trie Tests', () => {
 
     assert.deepEqual(newTrie.suggest('pi'), ['pizza', 'pit', 'pie']);
   })
+
+
 
 
 })

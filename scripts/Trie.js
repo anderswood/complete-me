@@ -1,8 +1,8 @@
 import Node from './Node'
 
 export default class Trie {
-  constructor (name) {
-    this.root = new Node(name);
+  constructor () {
+    this.root = new Node('');
     this.children = {};
     this.counter;
   }
@@ -82,6 +82,10 @@ export default class Trie {
       })
     }
     return suggestionArr;
+  }
+
+  populate () {
+
   }
 
 
