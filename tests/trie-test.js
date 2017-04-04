@@ -74,14 +74,15 @@ describe('Trie Tests', () => {
     assert.equal(foundNode, undefined);
   })
 
-  it('should return the quantity of words in the trie', () => {
+  it('should return the quantity of complete words in the trie', () => {
     let newTrie = new Trie('b');
 
-    newTrie.insert('hip');
+    newTrie.insert('art');
+    // newTrie.insert('butt');
     assert.equal(newTrie.count(), 1);
-    newTrie.insert('purple');
+    newTrie.insert('are');
     assert.equal(newTrie.count(), 2);
-    newTrie.insert('hippo');
+    newTrie.insert('artsy');
     assert.equal(newTrie.count(), 3);
   })
 
