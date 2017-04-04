@@ -107,5 +107,29 @@ describe('Trie Tests', () => {
     assert.equal(newTrie.count(), 3);
   })
 
+  it('should return an array of suggested words', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('pizza');
+    newTrie.insert('pit');
+    let suggestArr = newTrie.suggest('pi')
+
+
+    assert.deepEqual(suggestArr, ['pizza', 'pit']);
+  })
+
+  it('should return an array of a bunch of suggested words', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('photo');
+    newTrie.insert('pizza');
+    newTrie.insert('butt');
+    newTrie.insert('pit');
+    newTrie.insert('pie');
+    newTrie.insert('puppy');
+
+    assert.deepEqual(newTrie.suggest('pi'), ['pizza', 'pit', 'pie']);
+  })
+
 
 })

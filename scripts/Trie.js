@@ -45,8 +45,7 @@ export default class Trie {
   count () {
     let currentNode = this.root
 
-    const filterKeys = function(currentNode) {
-
+    const filterKeys = (currentNode) => {
       let counter = 0
 
       if (currentNode.isWord) {
@@ -63,11 +62,26 @@ export default class Trie {
       }
       return counter
     }
+
     return filterKeys(currentNode);
   }
 
-  suggest () {
+  suggest (suggestion) {
+    let suggestionArr = [];
+    let currentNode = this.findNode(suggestion);
 
+    if (currentNode.isWord) {
+      suggestionArr.push(suggestion);
+    }
+
+    if (!currentNode.children) {
+      return;
+    } else {
+      Object.keys(currentNode.children).forEach(letter => {
+        suggestionArr = suggestionArr.concat(this.suggest(suggestion + letter));
+      })
+    }
+    return suggestionArr;
   }
 
 
