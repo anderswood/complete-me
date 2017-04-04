@@ -8,17 +8,24 @@ export default class Trie {
   }
 
   insert (userInput) {
-    let currentNode = this.root
+    let currentNode = this.root;
+    let accumLetters = '';
 
     userInput.split('').forEach(letter => {
+      accumLetters = accumLetters + letter;
+
       if (currentNode.children[letter]) {
         return currentNode = currentNode.children[letter];
       }
-      currentNode.children[letter] = new Node(letter);
-      currentNode = currentNode.children[letter];
+
+      currentNode.children[letter] = new Node(letter); //insert new node
+      currentNode = currentNode.children[letter]; //update trie location
+
+      if (!currentNode.address) {
+        currentNode.address = accumLetters
+      }
     })
     currentNode.isWord = true;
-    currentNode.address = userInput;
   }
 
   findNode (word) {
@@ -35,47 +42,29 @@ export default class Trie {
     }
   }
 
-  // filterKeys (counter, currentNode) {
-  //   if (!this.children) {
-  //     return //if no children
-  //   } else {
-  //     let keys = Object.keys(this.children)
-  //
-  //     keys.forEach(letter =>{
-  //       this.children[letter].isWord ? counter++ : null
-  //       currentNode = currentNode.chilren[letter];
-  //     })
-  //     currentNode.filterKeys(counter, currentNode);
-  //     return counter;
-  //   }
-  //
-  // }
-
   count () {
-    // this.counter = 0;
-    let counter = 0;
     let currentNode = this.root
 
-    const filterKeys = function(counter, currentNode) {
-      console.log('this: ', this)
+    const filterKeys = function(currentNode) {
 
-      if (!this.children) {
-        return //if no children
+      let counter = 0
+
+      if (currentNode.isWord) {
+        counter++
+      }
+
+      if (!currentNode.children) {
+        return 0 // exit recursion if no children
+
       } else {
-        Object.keys(this.children).forEach(letter =>{
-          this.children[letter].isWord ? counter++ : null
-          currentNode = currentNode.chilren[letter];
-          console.log('letter: ', letter)
-          console.log('this: ', this)
-          console.log('counter: ', counter)
-          return filterKeys(counter, currentNode)
+        Object.keys(currentNode.children).forEach(letter =>{
+          counter += filterKeys(currentNode.children[letter])
         })
       }
       return counter
     }
-    return counter;
+    return filterKeys(currentNode);
   }
-
 
   suggest () {
 

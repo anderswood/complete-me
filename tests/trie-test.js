@@ -74,15 +74,36 @@ describe('Trie Tests', () => {
     assert.equal(foundNode, undefined);
   })
 
-  it('should return the quantity of complete words in the trie', () => {
+  it('should return the quantity of complete words in the trie (1 word)', () => {
     let newTrie = new Trie('b');
 
     newTrie.insert('art');
-    // newTrie.insert('butt');
+    assert.equal(newTrie.count(), 1);
+  })
+
+  it('should return the quantity of complete words in the trie (4 words)', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('art');
     assert.equal(newTrie.count(), 1);
     newTrie.insert('are');
     assert.equal(newTrie.count(), 2);
     newTrie.insert('artsy');
+    assert.equal(newTrie.count(), 3);
+    newTrie.insert('a');
+    assert.equal(newTrie.count(), 4);
+  })
+
+  it('should return the quantity of complete, UNIQUE words', () => {
+    let newTrie = new Trie('b');
+
+    newTrie.insert('art');
+    assert.equal(newTrie.count(), 1);
+    newTrie.insert('are');
+    assert.equal(newTrie.count(), 2);
+    newTrie.insert('artsy');
+    assert.equal(newTrie.count(), 3);
+    newTrie.insert('are');
     assert.equal(newTrie.count(), 3);
   })
 
