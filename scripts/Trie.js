@@ -4,20 +4,28 @@ export default class Trie {
   constructor (name) {
     this.root = new Node(name);
     this.children = {};
+    this.counter;
   }
 
   insert (userInput) {
-    let currentNode = this.root
+    let currentNode = this.root;
+    let accumLetters = '';
 
     userInput.split('').forEach(letter => {
+      accumLetters = accumLetters + letter;
+
       if (currentNode.children[letter]) {
         return currentNode = currentNode.children[letter];
       }
-      currentNode.children[letter] = new Node(letter);
-      currentNode = currentNode.children[letter];
+
+      currentNode.children[letter] = new Node(letter); //insert new node
+      currentNode = currentNode.children[letter]; //update trie location
+
+      if (!currentNode.address) {
+        currentNode.address = accumLetters
+      }
     })
     currentNode.isWord = true;
-    currentNode.address = userInput;
   }
 
   findNode (word) {
@@ -35,7 +43,27 @@ export default class Trie {
   }
 
   count () {
+    let currentNode = this.root
 
+    const filterKeys = function(currentNode) {
+
+      let counter = 0
+
+      if (currentNode.isWord) {
+        counter++
+      }
+
+      if (!currentNode.children) {
+        return 0 // exit recursion if no children
+
+      } else {
+        Object.keys(currentNode.children).forEach(letter =>{
+          counter += filterKeys(currentNode.children[letter])
+        })
+      }
+      return counter
+    }
+    return filterKeys(currentNode);
   }
 
   suggest () {
