@@ -5,20 +5,20 @@ require('locus')
 
 describe('Trie Tests (Phase I)', () => {
 
-  it('should be an instance of Trie', () => {
+  it('1. should be an instance of Trie', () => {
     let newTrie = new Trie;
 
     assert.instanceOf(newTrie, Trie);
   })
 
-  it('should have a property root which is an instance of a node', () => {
+  it('2. should have a property root which is an instance of a node', () => {
     let newTrie = new Trie;
     let newNode = new Node('');
 
     assert.deepEqual(newTrie.root, newNode);
   })
 
-  it('should add a word to the tree', () => {
+  it('3. should add a word to the tree', () => {
     let newTrie = new Trie;
 
     newTrie.insert('at');
@@ -28,7 +28,7 @@ describe('Trie Tests (Phase I)', () => {
     assert.deepEqual(newTrie.root.children.a.children.t.children, {});
   })
 
-  it('should add new branches to the tree when adding certain words', () => {
+  it('4. should add new branches to the tree when adding certain words', () => {
     let newTrie = new Trie;
 
     newTrie.insert('at');
@@ -37,7 +37,7 @@ describe('Trie Tests (Phase I)', () => {
     assert.deepEqual(newTrie.root.children.a.children.t.children.s.name, 's');
   })
 
-  it('should update the "isWord" property to be true', () => {
+  it('5. should update the "isWord" property to be true', () => {
     let newTrie = new Trie;
 
     newTrie.insert('at');
@@ -45,15 +45,8 @@ describe('Trie Tests (Phase I)', () => {
     assert.equal(newTrie.root.children.a.children.t.isWord, true);
   })
 
-  it('should update the "address" property to reflect the word', () => {
-    let newTrie = new Trie;
-
-    newTrie.insert('at');
-
-    assert.equal(newTrie.root.children.a.children.t.address, 'at');
-  })
-
-  it('should locate and return a node based on the string in the address property', () => {
+  it('6. should locate and return a node based on the string in the' +
+      'address property', () => {
     let newTrie = new Trie;
     let newWord = 'at';
 
@@ -63,24 +56,16 @@ describe('Trie Tests (Phase I)', () => {
     assert.equal(foundNode, newTrie.root.children.a.children.t);
   })
 
-  it('should return undefined if find method called with string that cant be found', () => {
-    let newTrie = new Trie;
-    let newWord = 'at';
-
-    newTrie.insert(newWord);
-    let foundNode = newTrie.findNode('hippo');
-
-    assert.equal(foundNode, undefined);
-  })
-
-  it('should return the quantity of complete words in the trie (1 word)', () => {
+  it('7. should return the quantity of complete words in the trie' +
+      '(1 word)', () => {
     let newTrie = new Trie;
 
     newTrie.insert('art');
     assert.equal(newTrie.count(), 1);
   })
 
-  it('should return the quantity of complete words in the trie (4 words)', () => {
+  it('8. should return the quantity of complete words in the trie' +
+      '(4 words)', () => {
     let newTrie = new Trie;
 
     newTrie.insert('art');
@@ -93,7 +78,7 @@ describe('Trie Tests (Phase I)', () => {
     assert.equal(newTrie.count(), 4);
   })
 
-  it('should return the quantity of complete, UNIQUE words', () => {
+  it('9. should return the quantity of complete, UNIQUE words', () => {
     let newTrie = new Trie;
 
     newTrie.insert('art');
@@ -106,7 +91,7 @@ describe('Trie Tests (Phase I)', () => {
     assert.equal(newTrie.count(), 3);
   })
 
-  it('should return an array of suggested words', () => {
+  it('10. should return an array of suggested words', () => {
     let newTrie = new Trie;
 
     newTrie.insert('pizza');
@@ -117,7 +102,7 @@ describe('Trie Tests (Phase I)', () => {
     assert.deepEqual(suggestArr, ['pizza', 'pit']);
   })
 
-  it('should return an array of a bunch of suggested words', () => {
+  it('11. should return an array of a bunch of suggested words', () => {
     let newTrie = new Trie;
 
     newTrie.insert('photo');

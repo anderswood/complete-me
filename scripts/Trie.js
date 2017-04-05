@@ -5,7 +5,6 @@ export default class Trie {
   constructor () {
     this.root = new Node('');
     this.children = {};
-    this.counter;
   }
 
   insert (userInput) {
@@ -21,10 +20,6 @@ export default class Trie {
 
       currentNode.children[letter] = new Node(letter); //insert new node
       currentNode = currentNode.children[letter]; //update trie location
-
-      if (!currentNode.address) {
-        currentNode.address = accumLetters
-      }
     })
     currentNode.isWord = true;
   }
@@ -37,10 +32,8 @@ export default class Trie {
         currentNode = currentNode.children[letter];
       }
     })
-
-    if (currentNode.address === word) {
-      return currentNode;
-    }
+    
+    return currentNode;
   }
 
   count () {
@@ -55,12 +48,12 @@ export default class Trie {
 
       if (!currentNode.children) {
         return 0 // exit recursion if no children
-
       } else {
         Object.keys(currentNode.children).forEach(letter =>{
           counter += filterKeys(currentNode.children[letter])
         })
       }
+
       return counter
     }
 
@@ -82,6 +75,44 @@ export default class Trie {
         suggestionArr = suggestionArr.concat(this.suggest(suggestion + letter));
       })
     }
+
+    if (currentNode.suggestSelected) {
+      suggestionArr = this.sortSuggestionArr(suggestionArr, currentNode);
+    }
+
+    return suggestionArr;
+  }
+
+  sortSuggestionArr (suggestionArr, currentNode) {
+    let suggestSelectedObj = currentNode.suggestSelected;
+
+    //sort suggestSelected objects in descending order by key values
+    let priorityArr = Object.keys(suggestSelectedObj).reduce((acc, next) => {
+      if (!acc.length) {
+        acc.push(next)
+      } else {
+        let i = 0
+
+        while (suggestSelectedObj[next] < suggestSelectedObj[acc[i]]) {
+          i++
+        }
+        acc.splice(i, 0, next)
+      }
+
+      return acc;
+    }, [])
+
+    //move prioritized words to beginning of suggestionArr
+    suggestionArr = priorityArr.reduce((acc, next, i) => {
+      acc.splice(acc.indexOf(next), 1)
+
+      if (i === priorityArr.length - 1) {
+        acc = priorityArr.concat(acc);
+      }
+
+      return acc;
+    }, suggestionArr)
+
     return suggestionArr;
   }
 
@@ -92,7 +123,17 @@ export default class Trie {
   }
 
   select (suggestion, selection) {
-    
+    let suggestionNode = this.findNode(suggestion);
+
+    if (!suggestionNode.suggestSelected) {
+      suggestionNode.suggestSelected = {}
+    }
+
+    if (!suggestionNode.suggestSelected[selection]) {
+      suggestionNode.suggestSelected[selection] = 1;
+    } else {
+      suggestionNode.suggestSelected[selection]++;
+    }
   }
 
 }
