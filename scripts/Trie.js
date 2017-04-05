@@ -1,5 +1,6 @@
 import Node from './Node'
 
+
 export default class Trie {
   constructor () {
     this.root = new Node('');
@@ -84,9 +85,14 @@ export default class Trie {
     return suggestionArr;
   }
 
-  populate () {
-
+  populate (dictionary) {
+    dictionary.forEach(word => {
+      this.insert(word);
+    })
   }
 
+  select (suggestion, selection) {
+    
+  }
 
 }
